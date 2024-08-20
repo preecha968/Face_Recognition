@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+    
+    body {
+        display: flex;
+        height: 100vh;
+    }
+    
+    .container {
+        display: flex;
+        width: 100%;
+    }
+    
+    .sidebar {
+        width: 250px;
+        background-color: #f5f6fa;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    
+    .logo {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    
+    .logo h2 {
+        color: #5a67d8;
+    }
+    
+    .nav {
+        list-style-type: none;
+    }
+    
+    .nav li {
+        margin: 20px 0;
+    }
+    
+    .nav li a {
+        text-decoration: none;
+        color: #6b7280;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+    }
+    
+    .nav li a:hover {
+        color: #5a67d8;
+    }
+    
+    .main-content {
+        flex: 1;
+        padding: 20px;
+        background-color: #f8f9fa;
+    }
+    
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+    }
+    
+    .header h1 {
+        color: #4a5568;
+    }
+    
+    .user-actions {
+        display: flex;
+        align-items: center;
+    }
+    
+    .user-actions input {
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #d1d5db;
+        margin-right: 20px;
+    }
+    
+    .user-actions img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+    }
+    
+    .cards {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 30px;
+    }
+    
+    .card {
+        background-color: #4a67d8;
+        color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        width: 48%;
+    }
+    
+    .stats {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 30px;
+    }
+    
+    .weekly-activity, .expense-statistics {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        width: 48%;
+    }
+    
+    .transactions {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+    }
+    
+    .transactions ul {
+        list-style-type: none;
+    }
+    
+    .transactions ul li {
+        margin-bottom: 10px;
+        color: #4a5568;
+    }
+    
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <h2>AdminDash</h2>
+            </div>
+            <ul class="nav">
+                <li><a href="#">Dashboard</a></li>
+                <li><a href="#">Transactions</a></li>
+                <li><a href="#">Accounts</a></li>
+                <li><a href="#">Investments</a></li>
+                <li><a href="#">Credit Cards</a></li>
+                <li><a href="#">Loans</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">Settings</a></li>
+                <li><a href="#">Login</a></li>
+                <li><a href="#">Sign-Up</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="header">
+                <h1>Overview</h1>
+                <div class="user-actions">
+                    <input type="text" placeholder="Search for something">
+                    <img src="user-avatar.png" alt="User Avatar">
+                </div>
+            </header>
+
+            <section class="cards">
+                <div class="card">
+                    <h3>Balance</h3>
+                    <p>$5,756</p>
+                    <p>CARD HOLDER: Eddy Cusuma</p>
+                    <p>**** **** **** 1234</p>
+                </div>
+                <div class="card">
+                    <h3>Balance</h3>
+                    <p>$3,200</p>
+                    <p>CARD HOLDER: Jane Doe</p>
+                    <p>**** **** **** 5678</p>
+                </div>
+            </section>
+
+            <section class="stats">
+                <div class="weekly-activity">
+                    <h3>Weekly Activity</h3>
+                    <canvas id="weeklyChart"></canvas>
+                </div>
+                <div class="expense-statistics">
+                    <h3>Expense Statistics</h3>
+                    <canvas id="expenseChart"></canvas>
+                </div>
+            </section>
+
+            <section class="transactions">
+                <h3>Recent Transactions</h3>
+                <ul>
+                    <li>Deposit from my Card: - $500</li>
+                    <li>Deposit Paypal: + $500</li>
+                    <li>Jemi Wilson: + $500</li>
+                </ul>
+            </section>
+        </main>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="scripts.js"></script>
+</body>
+</html>

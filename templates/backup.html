@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Attendance System</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #89fffd, #ef32d9);
+            color: #fff;
+        }
+
+        .container {
+            text-align: center;
+            height: 100vh;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 40px;
+            font-weight: bold;
+            text-shadow: 2px 2px #000;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-evenly;
+            gap: 10px;
+        }
+
+        .button {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            color: #fff;
+            text-decoration: none;
+            background-color: #333;
+            border-radius: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to students system attendance</h1>
+        <div class="button-container">
+            <a href="#" class="button">Student</a>
+            <a href="{{ url_for('admin') }}" class="button">Admin</a>
+            <a href="#" class="button">Attendance List</a>
+        </div>
+    </div>
+</body>
+</html>
