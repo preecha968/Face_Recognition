@@ -61,7 +61,7 @@ def signup():
 @app.route('/dashboard')
 def dashboard():
     if 'username' in session:
-        return f'Welcome, {session["username"]}! <br><a href="/logout">Logout</a>'
+        return render_template("dashboard.html")
     else:
         return redirect(url_for('admin'))
 
