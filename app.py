@@ -13,7 +13,9 @@ bcrypt = Bcrypt(app)
 # MongoDB setup
 client = MongoClient('mongodb://localhost:27017/')
 db = client['attendance_system']
+# collections
 users_collection = db['users']
+students_collection = db['students']
 
 @app.route('/')
 def home():
@@ -58,17 +60,42 @@ def signup():
     flash('Signup successful! Please log in.')
     return redirect(url_for('admin'))
 
-@app.route('/dashboard')
+@app.route('/admin/dashboard')
 def dashboard():
     if 'username' in session:
         return render_template("dashboard.html")
     else:
         return redirect(url_for('admin'))
+    
+@app.route('/admin/add_students', methods=["POST","GET"])
+def add_students():
+    if request.method == "POST":
+        id = request.form['id']
+        name = request.form['name']
+        password = request.form['password']
+        dob = request.form['dob']
+        
+        students_collection.insert_one({
+            "id": id,
+            "name":name,
+            "password":password,
+            "dob":dob,
+        })
+        flash ("added successfully")
+    
+        if 'username' in session:
+            return render_template("add_students.html")
+        else:
+            return redirect(url_for('admin'))
+    return render_template("add_students.html")
 
 @app.route('/logout')
 def logout():
     session.clear()
     return redirect(url_for('home'))
+
+
+    
 
 if __name__ == "__main__":
     app.run(debug=True)

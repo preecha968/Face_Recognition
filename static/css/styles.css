@@ -31,13 +31,13 @@ nav:hover{
 .logo{
   text-align: center;
   display: flex;
-  margin: 10px 0 0 10px;
+  margin: 30px 0 0 10px;
   padding-bottom: 3rem;
 }
 
 .logo img{
-  width: 45px;
-  height: 45px;
+  width: 55px;
+  height: 55px;
   border-radius: 50%;
 }
 .logo span{
@@ -45,11 +45,12 @@ nav:hover{
   padding-left: 15px;
   font-size: 18px;
   text-transform: uppercase;
+
 }
 a{
   position: relative;
   width: 280px;
-  font-size: 22px;
+  font-size: 16px;
   color: rgb(85, 83, 83);
   display: table;
   padding: 10px;
@@ -64,8 +65,9 @@ nav .fas{
 }
 .nav-item{
   position: relative;
-  top: 12px;
+  top: 18px;
   margin-left: 10px;
+  font-weight: bold;
 }
 a:hover{
   background: #eee;
@@ -209,3 +211,6 @@ table thead tr{
   color: #fff;
   transition: 0.5rem;
 }
+ /* add students */
+
+ 

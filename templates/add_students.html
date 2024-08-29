@@ -1,0 +1,253 @@
+<span style="font-family: verdana, geneva, sans-serif"
+  ><!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <title>Add Students</title>
+      <!-- Link to the CSS file -->
+      <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/add_students.css') }}"
+      />
+      <!-- Font Awesome Cdn Link -->
+      <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      />
+    </head>
+    <body>
+      <div class="container">
+        <nav>
+          <ul>
+            <li>
+              <a href="#" class="logo">
+                <img
+                  src="https://media.geeksforgeeks.org/wp-content/uploads/20221210180014/profile-removebg-preview.png"
+                />
+                <span class="nav-item"
+                  >Admin<br />welcome,{{session["username"]}}!</span
+                >
+              </a>
+            </li>
+            <li>
+              <a href="/admin/dashboard">
+                <i class="fas fa-menorah"></i>
+                <span class="nav-item">Dashboard</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <i class="fas fa-comment"></i>
+                <span class="nav-item">Message</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <i class="fas fa-database"></i>
+                <span class="nav-item">Add Students</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <i class="fas fa-chart-bar"></i>
+                <span class="nav-item">Attendance</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <i class="fas fa-cog"></i>
+                <span class="nav-item">Setting</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="/logout" class="logout">
+                <i class="fas fa-sign-out-alt"></i>
+                <span class="nav-item">Log out</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+
+        <section class="container1">
+            <header>Add Student</header>
+            <form
+              action="/admin/add_students"
+              method="post"
+              class="form"
+              enctype="multipart/form-data"
+            >
+              <div class="input-box">
+                <label>ID</label>
+                <input
+                  type="text"
+                  placeholder="Enter the student unique ID"
+                  name="id"
+                  required
+                />
+              </div>
+              <div class="input-box">
+                <label>Full Name</label>
+                <input
+                  type="text"
+                  placeholder="Enter full name"
+                  name="name"
+                  required
+                />
+              </div>
+              <div class="input-box">
+                <label>Password</label>
+                <input
+                  type="password"
+                  placeholder="Enter the password"
+                  name="password"
+                  required
+                />
+              </div>
+              <div class="input-box">
+                <label>Email Address</label>
+                <input
+                  type="email"
+                  placeholder="Enter email address"
+                  name="email"
+                  required
+                />
+              </div>
+              <div class="column">
+                <div class="input-box">
+                  <label>Phone Number</label>
+                  <input
+                    type="text"
+                    placeholder="Enter phone number"
+                    name="phone"
+                    required
+                  />
+                </div>
+                <div class="input-box">
+                  <label>Birth Date</label>
+                  <input
+                    type="date"
+                    placeholder="Enter birth date"
+                    name="dob"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="input-box address">
+                <label>Address</label>
+                <div class="column">
+                  <input
+                    type="text"
+                    placeholder="Enter your city"
+                    name="city"
+                    required
+                  />
+                  <div class="select-box">
+                    <select name="country">
+                      <option hidden>Country</option>
+                      <option>Canada</option>
+                      <option>USA</option>
+                      <option>India</option>
+                      <option>Nepal</option>
+                      <option>Japan</option>
+                      <option>UK</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="input-box">
+                <label>Major</label>
+                <input
+                  type="text"
+                  placeholder="Enter the Major"
+                  name="major"
+                  required
+                />
+              </div>
+              <div class="input-box">
+                <label>Starting Year</label>
+                <input
+                  type="number"
+                  placeholder="Enter the Starting Year"
+                  name="starting_year"
+                  required
+                />
+              </div>
+              <div class="input-box">
+                <label>Current Year</label>
+                <input
+                  type="number"
+                  placeholder="Enter the Current Year"
+                  name="year"
+                  required
+                />
+              </div>
+              <div class="input-box">
+                <label>Standing</label>
+                <input
+                  type="text"
+                  placeholder="Enter the Grades"
+                  name="standing"
+                  required
+                />
+              </div>
+    
+              <div class="input-box">
+                <label>Total Attendance</label>
+                <input
+                  type="number"
+                  placeholder="Enter the Attendance Number"
+                  name="total_attendance"
+                  required
+                />
+              </div>
+              <div class="column">
+                <div class="input-box">
+                  <label>Last Attendance Date</label>
+                  <input
+                    type="date"
+                    placeholder="Enter the Last Attendance Date (YYYY-MM-DD)"
+                    name="last_attendance_date"
+                    required
+                  />
+                </div>
+    
+                <div class="input-box">
+                  <label>Last Attendance Time</label>
+                  <input
+                    type="time"
+                    placeholder="Enter the Last Attendance Time (HH:MM:SS)"
+                    name="last_attendance_time"
+                    required
+                  />
+                </div>
+              </div>
+    
+              <div class="input-box">
+                <label>Notes</label>
+                <input
+                  type="textarea"
+                  placeholder="Enter any notes"
+                  name="content"
+                  required
+                />
+              </div>
+    
+              <div class="input-box">
+                <label>Upload Image</label>
+                <input
+                  type="file"
+                  placeholder="Upload the new student image"
+                  name="image"
+                  value="image"
+                  required
+                />
+              </div>
+              <button>Submit</button>
+            </form>
+          </section>
+        </section>
+      </div>
+    </body>
+  </html>
+</span>
