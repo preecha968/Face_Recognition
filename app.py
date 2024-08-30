@@ -63,6 +63,27 @@ def signup():
     return redirect(url_for('admin'))
 
 
+@app.route('/student_login', methods=['POST','GET'])
+def student_login():
+    if request.method == 'POST':
+        id = request.form['id']
+        email = request.form['email']
+        password = request.form['password']
+        student = students_collection.find_one({'id':id,'email':email,'password':password})
+        if student:
+            return redirect(url_for('student_profile'))
+        else:
+            return redirect(url_for('student_login'))
+    return render_template ('student_login.html')
+
+
+
+@app.route('/student_profile')
+def student_profile():
+    students = students_collection.find()  # Retrieve all student documents from MongoDB
+    return render_template ('student_profile.html',students=students)
+
+
 
 
 @app.route('/admin/dashboard')
@@ -119,7 +140,7 @@ def add_students():
             "note":content,
             "image":image_data,      
         })
-        flash ("added successfully")
+        flash ("added successfully") #อย่าลืมทำต่อ..ยังไม่แสดงผล
         
     return render_template("add_students.html")
 
