@@ -6,6 +6,20 @@
     <title>Student Attendance System</title>
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css" />
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      #video-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 90px;
+        
+    }
+
+    video {
+        width: 100vh;
+        border-radius: 8px;
+    }
+    </style>
 </head>
 <body>
     <div class="navbar bg-primary">
@@ -38,6 +52,7 @@
           <a class="btn btn-ghost text-xl">Students Attendance</a>
         </div>
         <div class="navbar-end">
+          <button id="toggle-video" class="btn btn-secondary ml-4">Toggle Video</button>
           <button class="btn btn-ghost btn-circle">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -71,5 +86,43 @@
           </button>
         </div>
       </div>
+
+
+      <div id="video-container" class="flex justify-start p-4">
+        <video id="video" autoplay></video>
+      </div>
+
+    <script>
+        const video = document.getElementById('video');
+        const toggleButton = document.getElementById('toggle-video');
+        let stream;
+
+        // Access the camera and display the video
+        async function startVideo() {
+            stream = await navigator.mediaDevices.getUserMedia({ video: true });
+            video.srcObject = stream;
+        }
+
+        // Stop the video stream
+        function stopVideo() {
+            const tracks = stream.getTracks();
+            tracks.forEach(track => track.stop());
+            video.srcObject = null;
+        }
+
+        // Toggle video on and off
+        toggleButton.addEventListener('click', () => {
+            if (video.srcObject) {
+                stopVideo();
+                toggleButton.textContent = 'Turn On Video';
+            } else {
+                startVideo();
+                toggleButton.textContent = 'Turn Off Video';
+            }
+        });
+
+        // Start video by default
+        startVideo();
+    </script>
 </body>
 </html>

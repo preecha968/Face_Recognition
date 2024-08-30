@@ -12,12 +12,16 @@ Session(app)
 
 bcrypt = Bcrypt(app)
 
+###############################################################################################################
+
 # MongoDB setup
 client = MongoClient('mongodb://localhost:27017/')
 db = client['attendance_system']
 # collections
 users_collection = db['users']
 students_collection = db['students']
+
+###############################################################################################################
 
 @app.route('/')
 def home():
@@ -26,6 +30,8 @@ def home():
 @app.route('/admin')
 def admin():
     return render_template('admin.html')
+
+###############################################################################################################
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -39,6 +45,8 @@ def login():
     else:
         flash('Invalid username or password')
         return redirect(url_for('admin'))
+    
+###############################################################################################################
 
 @app.route('/signup', methods=['POST'])
 def signup():
@@ -62,29 +70,40 @@ def signup():
     flash('Signup successful! Please log in.')
     return redirect(url_for('admin'))
 
+###############################################################################################################
 
-@app.route('/student_login', methods=['POST','GET'])
+@app.route('/student_login', methods=['POST', 'GET'])
 def student_login():
     if request.method == 'POST':
         id = request.form['id']
         email = request.form['email']
         password = request.form['password']
-        student = students_collection.find_one({'id':id,'email':email,'password':password})
+        student = students_collection.find_one({'id': id, 'email': email, 'password': password})
         if student:
+            session['student'] = {
+                'id': student['id'],
+                'name': student['name'],
+                'email': student['email'],
+                'image': student['image']
+                # Add other fields as needed
+            }
             return redirect(url_for('student_profile'))
         else:
             return redirect(url_for('student_login'))
-    return render_template ('student_login.html')
+    return render_template('student_login.html')
 
-
+###############################################################################################################
 
 @app.route('/student_profile')
 def student_profile():
-    students = students_collection.find()  # Retrieve all student documents from MongoDB
-    return render_template ('student_profile.html',students=students)
+    student = session.get('student')
+    if student:
+        return render_template('student_profile.html', student=student)
+    else:
+        return redirect(url_for('student_login'))
 
 
-
+###############################################################################################################
 
 @app.route('/admin/dashboard')
 def dashboard():
@@ -93,10 +112,10 @@ def dashboard():
         return render_template("dashboard.html",students=students)
     else:
         return redirect(url_for('admin'))
+
+###############################################################################################################
     
-    
-    
-    
+       
 @app.route('/admin/add_students', methods=["POST","GET"])
 def add_students():
     if 'username' not in session:
@@ -145,15 +164,14 @@ def add_students():
     return render_template("add_students.html")
 
 
-
+###############################################################################################################
 
 @app.route('/logout')
 def logout():
     session.clear()
     return redirect(url_for('home'))
 
-
-    
+###############################################################################################################
 
 if __name__ == "__main__":
     app.run(debug=True)
