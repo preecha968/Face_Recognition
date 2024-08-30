@@ -2,6 +2,8 @@ from flask import Flask, render_template, request, redirect, url_for, session, f
 from flask_bcrypt import Bcrypt
 from flask_session import Session
 from pymongo import MongoClient
+from bson.objectid import ObjectId
+import base64
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
@@ -60,34 +62,69 @@ def signup():
     flash('Signup successful! Please log in.')
     return redirect(url_for('admin'))
 
+
+
+
 @app.route('/admin/dashboard')
 def dashboard():
     if 'username' in session:
-        return render_template("dashboard.html")
+        students = students_collection.find()  # Retrieve all student documents from MongoDB
+        return render_template("dashboard.html",students=students)
     else:
         return redirect(url_for('admin'))
     
+    
+    
+    
 @app.route('/admin/add_students', methods=["POST","GET"])
 def add_students():
-    if request.method == "POST":
+    if 'username' not in session:
+            return render_template("admin.html")
+    elif request.method == "POST":
         id = request.form['id']
         name = request.form['name']
         password = request.form['password']
+        email = request.form['email']
+        phone = request.form['phone']
         dob = request.form['dob']
+        city = request.form['city']
+        country = request.form['country']
+        major = request.form['major']
+        starting_year = request.form['starting_year']
+        year = request.form['year']
+        standing = request.form['standing']
+        content = request.form['content']
+        image =  request.files['image']
+        
+        if image:
+            # Convert the image to base64 encoding
+            image_data = base64.b64encode(image.read()).decode('utf-8')
+        else:
+            image_data = None
+        
         
         students_collection.insert_one({
             "id": id,
             "name":name,
             "password":password,
+            "email":email,
+            "phone":phone,
             "dob":dob,
+            "city":city,
+            "country":country,
+            "major":major,
+            "starting_year":starting_year,
+            "year":year,
+            "standing":standing,
+            "note":content,
+            "image":image_data,      
         })
         flash ("added successfully")
-    
-        if 'username' in session:
-            return render_template("add_students.html")
-        else:
-            return redirect(url_for('admin'))
+        
     return render_template("add_students.html")
+
+
+
 
 @app.route('/logout')
 def logout():

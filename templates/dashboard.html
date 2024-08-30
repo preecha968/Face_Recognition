@@ -76,10 +76,11 @@
             <i class="fas fa-user-cog"></i>
           </div>
           <div class="users">
+            {% for student in students %}
             <div class="card">
-              <img src="./pic/img1.jpg" />
-              <h4>Sam David</h4>
-              <p>Ui designer</p>
+              <img src="data:image/jpeg;base64,{{ student.image }}" />
+              <h4>{{student.name}}</h4>
+              <p>{{student.major}}</p>
               <div class="per">
                 <table>
                   <tr>
@@ -94,6 +95,7 @@
               </div>
               <button>Profile</button>
             </div>
+            {% endfor %}
             <div class="card">
               <img src="./pic/img2.jpg" />
               <h4>Balbina kherr</h4>
