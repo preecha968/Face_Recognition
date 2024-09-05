@@ -7,19 +7,19 @@
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css" />
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-      #video-container {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-top: 90px;
-        
-    }
-
-    video {
-        width: 100vh;
-        border-radius: 8px;
-    }
-    </style>
+      .video-container {
+            display: flex;
+            margin-left: 80px;
+            margin-top: 120px;
+            padding: 0 10px; /* Add padding for better responsiveness */
+        }
+        .video-container img {
+            border-radius: 15px; /* Rounded corners */
+            width: 100%; /* Make the video feed responsive */
+            max-width: 800px; /* Set a maximum width */
+            height: auto; /* Maintain aspect ratio */
+      }
+  </style>
 </head>
 <body>
     <div class="navbar bg-primary">
@@ -86,43 +86,35 @@
           </button>
         </div>
       </div>
-
-
-      <div id="video-container" class="flex justify-start p-4">
-        <video id="video" autoplay></video>
-      </div>
-
+      <div class="video-container">
+        <img src="{{ url_for('video_feed') }}" alt="Video Feed">
+        <div id="recognized-faces" style="margin-left: 20px;">
+            <!-- Captured faces will be displayed here -->
+        </div>
+    </div>
+    
     <script>
-        const video = document.getElementById('video');
-        const toggleButton = document.getElementById('toggle-video');
-        let stream;
-
-        // Access the camera and display the video
-        async function startVideo() {
-            stream = await navigator.mediaDevices.getUserMedia({ video: true });
-            video.srcObject = stream;
-        }
-
-        // Stop the video stream
-        function stopVideo() {
-            const tracks = stream.getTracks();
-            tracks.forEach(track => track.stop());
-            video.srcObject = null;
-        }
-
-        // Toggle video on and off
-        toggleButton.addEventListener('click', () => {
-            if (video.srcObject) {
-                stopVideo();
-                toggleButton.textContent = 'Turn On Video';
-            } else {
-                startVideo();
-                toggleButton.textContent = 'Turn Off Video';
-            }
-        });
-
-        // Start video by default
-        startVideo();
+    function updateRecognizedFaces() {
+        fetch('/get_recognized_faces')
+            .then(response => response.json())
+            .then(data => {
+                let container = document.getElementById('recognized-faces');
+                container.innerHTML = '';  // Clear the previous faces
+    
+                data.forEach(face => {
+                    let faceHTML = `
+                        <div class="recognized-face">
+                            <img src="/${face.image}" alt="${face.name}" style="border-radius: 50%; width: 100px; height: 100px;">
+                            <p>${face.name}</p>
+                            <p>${face.time}</p>
+                        </div>
+                    `;
+                    container.innerHTML += faceHTML;
+                });
+            });
+    }
+    
+    setInterval(updateRecognizedFaces, 5000);  // Update every 5 seconds
     </script>
 </body>
 </html>
